@@ -98,6 +98,9 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 							<li class="${contact_management_active}">
 								<a href="contact-management">Quản lý liên hệ</a>
 							</li>
+							<li class="${coupon_management_active}">
+								<a href="coupon-management">Quản lý mã giảm giá</a>
+							</li>
 						</ul>
 					</li>
 				</c:if>

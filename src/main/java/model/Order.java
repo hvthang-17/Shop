@@ -12,6 +12,11 @@ public class Order {
 
     public Order() {
     }
+    
+    public double calculateTotal() {
+        return cartProducts.stream().mapToDouble(p -> p.getPrice() * p.getQuantity()).sum();
+    }
+
 
     // Constructor to get order information of customer.
     public Order(int id, double total, Date date) {

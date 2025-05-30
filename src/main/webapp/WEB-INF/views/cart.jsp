@@ -1,5 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); %>
 
 <!DOCTYPE html>
@@ -14,8 +14,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 mb-0">
-						<a href="/">Trang chủ</a> <span class="mx-2 mb-0">/</span> <strong
-							class="text-black">Giỏ hàng</strong>
+						<a href="/">Trang chủ</a> <span class="mx-2 mb-0">/</span>
+						<strong class="text-black">Giỏ hàng</strong>
 					</div>
 				</div>
 			</div>
@@ -23,65 +23,53 @@
 
 		<div class="site-section">
 			<form class="container" method="post" action="checkout">
+				<!-- Hiển thị thông báo -->
+				<c:if test="${not empty message}">
+					<div class="alert alert-info">${message}</div>
+				</c:if>
+
 				<div class="row mb-5">
 					<div class="col-md-12">
 						<div class="site-blocks-table">
 							<table class="table table-bordered">
 								<thead>
 									<tr>
-										<th class="product-thumbnail">Ảnh</th>
-										<th class="product-name">Sản phẩm</th>
-										<th class="product-price">Giá</th>
-										<th class="product-quantity">Số lượng</th>
-										<th class="product-total">Tổng cộng</th>
-										<th class="product-remove">Xóa</th>
+										<th>Ảnh</th>
+										<th>Sản phẩm</th>
+										<th>Giá</th>
+										<th>Số lượng</th>
+										<th>Tổng cộng</th>
+										<th>Xóa</th>
 									</tr>
 								</thead>
-
 								<tbody>
 									<c:forEach items="${order.cartProducts}" var="o">
 										<tr>
-											<td class="product-thumbnail"><img
-												src="data:image/jpg;base64,${o.product.base64Image}"
-												alt="Image" class="img-fluid"></td>
-
-											<td><input name="product-name"
-												class="form-control-plaintext h5 text-black"
-												value="${o.product.name}" style="text-align: center"
-												readonly></td>
-
-											<td><input name="product-price"
-												class="form-control-plaintext h5 text-black"
-												value="${o.price}" style="text-align: center" readonly>
-											</td>
-
-											<td style="min-width: 180px">
-												<div class="input-group"
-													style="max-width: fit-content; margin: 0;">
+											<td><img src="data:image/jpg;base64,${o.product.base64Image}"
+													class="img-fluid" alt="Image"></td>
+											<td><input class="form-control-plaintext text-center" readonly
+												value="${o.product.name}" /></td>
+											<td><input class="form-control-plaintext text-center" readonly
+												value="${o.price}" /></td>
+											<td>
+												<div class="input-group">
 													<div class="input-group-prepend">
 														<button class="btn btn-outline-primary js-btn-minus"
 															type="button">&minus;</button>
 													</div>
-
 													<input name="product-quantity" type="text"
-														class="form-control text-center" value="${o.quantity}"
-														placeholder="" aria-label="Example text with button addon"
-														aria-describedby="button-addon1">
-
+														class="form-control text-center"
+														value="${o.quantity}" />
 													<div class="input-group-append">
 														<button class="btn btn-outline-primary js-btn-plus"
 															type="button">&plus;</button>
 													</div>
 												</div>
 											</td>
-
-											<td><input name="product-price-total"
-												class="form-control-plaintext h5 text-black"
-												value="${o.price * o.quantity}" style="text-align: center"
-												readonly></td>
-
+											<td><input class="form-control-plaintext text-center" readonly
+												value="${o.price * o.quantity}" /></td>
 											<td><a href="cart?remove-product-id=${o.product.id}"
-												class="btn btn-primary btn-sm">X</a></td>
+												class="btn btn-danger btn-sm">X</a></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -90,57 +78,49 @@
 					</div>
 				</div>
 
+				<!-- Áp dụng mã giảm giá -->
 				<div class="row">
 					<div class="col-md-6">
-						<div class="row mb-5">
-							<div class="col-md-6 mb-3 mb-md-0">
-								<a href="shop" class="btn btn-outline-primary btn-sm btn-block">Tiếp tục mua sắm</a>
-							</div>
+						<div class="mb-3">
+							<a href="shop" class="btn btn-outline-primary">Tiếp tục mua sắm</a>
 						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<label class="text-black h4" for="coupon">Mã giảm giá</label>
-								<p>Nhập mã giảm giá nếu bạn có.</p>
-							</div>
-							<div class="col-md-8 mb-3 mb-md-0">
-								<input type="text" class="form-control py-3" id="coupon"
-									placeholder="Nhập mã giảm giá" name="coupon">
+
+						<h4 class="text-black">Mã giảm giá</h4>
+						<p>Nhập mã nếu bạn có</p>
+
+						<div class="form-row">
+							<div class="col-md-8 mb-2">
+								<input type="text" class="form-control py-3" name="coupon"
+									placeholder="Nhập mã giảm giá">
 							</div>
 							<div class="col-md-4">
-								<button class="btn btn-primary btn-sm" type="submit"
-									name="action" value="applyCoupon">Áp dụng mã</button>
+								<button type="submit" name="action" value="applyCoupon"
+									class="btn btn-primary btn-sm btn-block">Áp dụng mã</button>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 pl-5">
-						<div class="row justify-content-end">
-							<div class="col-md-7">
-								<div class="row">
-									<div class="col-md-12 text-right border-bottom mb-5">
-										<h3 class="text-black h4 text-uppercase">Tổng giỏ hàng</h3>
-									</div>
-								</div>
-								<div class="row mb-5">
-									<div class="col-md-6">
-										<span class="text-black" style="font-size: 1.5em">Tổng cộng</span>
-									</div>
 
-									<div class="col-md-6 text-right">
-										<input name="order-price-total"
-											class="form-control-plaintext h5 text-black"
-											value="${total_price}" style="text-align: center" readonly>
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col-md-12">
-										<!-- Nút submit form -->
-										<button type="submit"
-											class="btn btn-primary btn-lg py-3 btn-block" name="action"
-											value="proceedCheckout">Tiến hành thanh toán</button>
-									</div>
-								</div>
+					<!-- Tổng cộng -->
+					<div class="col-md-6">
+						<div class="border p-4 rounded">
+							<h3 class="text-black h4 text-uppercase">Tổng giỏ hàng</h3>
+							<div class="d-flex justify-content-between">
+								<span class="text-black">Tổng cộng:</span>
+								<span class="text-black font-weight-bold">
+									<c:choose>
+										<c:when test="${not empty discounted_price}">
+											<del style="color: gray; font-size: 0.9em;">${total_price}</del>
+											&nbsp; ${discounted_price}
+										</c:when>
+										<c:otherwise>
+											${total_price}
+										</c:otherwise>
+									</c:choose>
+								</span>
 							</div>
+							<hr />
+							<button type="submit" name="action" value="proceedCheckout"
+								class="btn btn-primary btn-block">Tiến hành thanh toán</button>
 						</div>
 					</div>
 				</div>
@@ -153,3 +133,4 @@
 	<jsp:include page="templates/scripts.jsp" />
 </body>
 </html>
+
